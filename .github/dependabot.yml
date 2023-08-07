@@ -11,9 +11,10 @@ updates:
       interval: "weekly" # daily, weekly, monthly
     allow:
       # Allow updates for Lodash
-      - dependency-name: "lodash"
+      # - dependency-name: "lodash"
       # Allow updates for Angular and any packages starting "angular"
-      - dependency-name: "angular*"
+      # - dependency-name: "angular*"
+      - dependency-type: "all"
     ignore:
       # Ignore updates for lodash
       - dependency-name: "lodash"
