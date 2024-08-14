@@ -1,0 +1,33 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly" # daily, weekly, monthly
+    allow:
+      # Allow updates for Lodash
+      # - dependency-name: "lodash"
+      # Allow updates for Angular and any packages starting "angular"
+      # - dependency-name: "angular*"
+      - dependency-type: "all"
+    ignore:
+      # Ignore updates for lodash
+      - dependency-name: "lodash"
+      # Ignore updates for angular and its related package for version 16
+      - dependency-name: "angular*"
+        versions: ["16.x"]
+    # Allow up to 10 open pull requests for pip dependencies
+    open-pull-requests-limit: 10
+    registries:
+      npm-npmjs:
+        type: npm-registry
+        url: https://registry.npmjs.org
+        username: ${{secrets.MY_NPM_USERNAME}}
+        password: ${{secrets.MY_NPM_PASSWORD}}
+    reviewers:
+      - "VipulAggarwalCtr"
