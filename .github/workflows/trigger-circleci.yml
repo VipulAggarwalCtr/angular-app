@@ -1,0 +1,41 @@
+name: trigger-circleci
+on:
+  workflow_dispatch:
+    inputs:
+      # these inputs will be shown to the user on GitHub Actions page
+      # and the user can simply check off the tags to run
+      # the two sets of tests covering most of the features
+      # NOTE: GitHub workflows are limited to ten input parameters
+      tag1:
+        description: Run the tests tagged "@tag1"
+        required: false
+        type: boolean
+      tag2:
+        description: Run the tests tagged "@tag2"
+        required: false
+        type: boolean
+      # tests for individual features
+      tag3:
+        description: Run the tests tagged "@tag3"
+        required: false
+        type: boolean
+      generalTag:
+        description: Cypress Dashboard run tag
+        required: false
+        type: string
+
+jobs:
+  trigger-circleci:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Print GitHub event inputs
+        env:
+          EVENT: ${{ toJson(github.event.inputs) }}
+        run: |
+          echo "$EVENT"
+          # all environment variables that start with GITHUB_
+          # https://github.com/bahmutov/print-env
+          npx trigger-circleci-pipeline@1.9.1 \
+            --org bahmutov --project test-todomvc-using-app-actions \
+            --parameters "MACHINES=${{ github.event.inputs.machines }},RECORDED_RUN_TAG=\"${RUN_TAG}\",GREP_TAGS=\"${TAGS}\"" \
+            --branch $GITHUB_REF_NAME
