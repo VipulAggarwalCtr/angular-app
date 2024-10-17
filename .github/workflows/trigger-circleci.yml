@@ -33,9 +33,3 @@ jobs:
           EVENT: ${{ toJson(github.event.inputs) }}
         run: |
           echo "$EVENT"
-          # all environment variables that start with GITHUB_
-          # https://github.com/bahmutov/print-env
-          npx trigger-circleci-pipeline@1.9.1 \
-            --org bahmutov --project test-todomvc-using-app-actions \
-            --parameters "MACHINES=${{ github.event.inputs.machines }},RECORDED_RUN_TAG=\"${RUN_TAG}\",GREP_TAGS=\"${TAGS}\"" \
-            --branch $GITHUB_REF_NAME
