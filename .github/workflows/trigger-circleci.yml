@@ -33,3 +33,20 @@ jobs:
           EVENT: ${{ toJson(github.event.inputs) }}
         run: |
           echo "$EVENT"
+
+      - name: Trigger CircleCI run
+        run: |
+          # collect all input parameters into one string
+          TAGS=
+          if [[ "${{ github.event.inputs.tag1 }}" == "true" ]]; then
+            TAGS="@tag1"
+          fi
+          if [[ "${{ github.event.inputs.tag2 }}" == "true" ]]; then
+            TAGS="$TAGS,@tag2"
+          fi
+          if [[ "${{ github.event.inputs.tag3 }}" == "true" ]]; then
+            TAGS="$TAGS,@tag3"
+          fi
+
+          echo "Collected tags: $TAGS"
+          echo "Optional dashboard run tag: ${{ github.event.inputs.generalTag }}"
